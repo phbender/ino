@@ -42,11 +42,12 @@ class Upload(Command):
 
             conf_places = self.e.arduino_dist_places(['hardware', 'tools'])
             conf_places.append('/etc/avrdude') # fallback to system-wide conf on Fedora
+            conf_places.append('/etc') # on Arch, it is /etc/avrdude.conf
             self.e.find_file('avrdude.conf', places=conf_places)
         else:
             self.e.find_arduino_tool('avrdude', ['hardware', 'tools', 'avr', 'bin'])
             self.e.find_arduino_file('avrdude.conf', ['hardware', 'tools', 'avr', 'etc'])
-    
+
     def run(self, args):
         self.discover()
         port = args.serial_port or self.e.guess_serial_port()
